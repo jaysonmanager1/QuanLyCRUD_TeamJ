@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CrudUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('dashboard', [CrudUserController::class, 'dashboard']);
+
+Route::get('login', [CrudUserController::class, 'login'])->name('login');
+
+Route::get('signout', [CrudUserController::class, 'signOut'])->name('signout');
+
+Route::get('registration', [CrudUserController::class, 'registration'])->name('user.registration');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
