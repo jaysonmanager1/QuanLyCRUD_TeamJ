@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('dashboard', [CrudUserController::class, 'dashboard']);
 
 Route::get('login', [CrudUserController::class, 'login'])->name('login');
+Route::get('delete', [CrudUserController::class, 'deleteUser'])->name('user.deleteUser');
 
 Route::get('signout', [CrudUserController::class, 'signOut'])->name('signout');
 
