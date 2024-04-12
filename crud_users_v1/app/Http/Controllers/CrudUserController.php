@@ -25,7 +25,15 @@ class CrudUserController extends Controller
     {
         return view('auth.registration');
     }
+    /**
+    *Delete User
+     */
+    public function deleteUser(Request $request) {
+        $user_id = $request->get('id');
+        $user = User::destroy($user_id);
 
+        return redirect("list")->withSuccess('You have signed-in');
+    }
     // Signout
     public function signOut()
     {
