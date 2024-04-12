@@ -19,9 +19,9 @@
                                 <th></th>
                                 <th></th>
                                 <th>
-                                    <a href="#"</a> |
-                                    <a href="#"</a> |
-                                    <a href="#"</a>
+                                    <a href="#">View</a> |
+                                    <a href="#">Edit</a> |
+                                    <a href="#">Delist</a>
                                 </th>
                             </tr>
                         @endforeach

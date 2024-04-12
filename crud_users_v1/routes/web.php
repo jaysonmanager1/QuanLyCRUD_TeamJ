@@ -22,7 +22,8 @@ Route::get('delete', [CrudUserController::class, 'deleteUser'])->name('user.dele
 Route::get('signout', [CrudUserController::class, 'signOut'])->name('signout');
 
 Route::get('registration', [CrudUserController::class, 'registration'])->name('user.registration');
+Route::post('create', [CrudUserController::class, 'postUser'])->name('user.postUser');
 
 Route::get('/', function () {
-    return view('login');
+    return view('welcome');
 });

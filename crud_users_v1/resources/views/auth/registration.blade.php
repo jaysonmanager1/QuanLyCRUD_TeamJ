@@ -6,7 +6,7 @@
         <div class="card-login">
             <div class="card-body">
                 <h1>Màn hình đăng ký</h1>
-                <form action="{{-- route('user.postUser') --}}" method="POST" class="regis-form">
+                <form action="{{ route('user.postUser') }}" method="POST" class="regis-form">
                     @csrf
                     <div>
                         <label class="lb-input" for="name">Name</label>
