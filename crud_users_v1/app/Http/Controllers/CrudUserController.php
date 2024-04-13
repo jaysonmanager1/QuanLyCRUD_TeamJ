@@ -116,7 +116,14 @@ class CrudUserController extends Controller
         // roi toi tra no ve trang list
         return redirect("list")->withSuccess('User details have been updated');
     }
-
+     /** View user detail */
+     public function readUser(Request $request)
+     {
+         $user_id = $request->get('id');
+         $user = User::find($user_id);
+ 
+         return view('auth.read', ['user' => $user]);
+     }
     // Signout
     public function signOut()
     {
