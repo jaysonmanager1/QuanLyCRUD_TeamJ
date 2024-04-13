@@ -2,6 +2,7 @@
 
 @section('content')
     <main class="login-form">
+        <h1>Chi tiết user {{ $user->name }}</h1>
         <div class="container">
             <div class="row justify-content-center">
                 <table>
@@ -14,9 +15,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
                         </tr>
                     </tbody>
                 </table>
