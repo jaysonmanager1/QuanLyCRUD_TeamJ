@@ -34,6 +34,16 @@ class CrudUserController extends Controller
 
         return redirect("login")->withSuccess('Login details are not valid');
     }
+    /** List of users */
+    public function listUser()
+    {
+        if (Auth::check()) {
+            $users = User::all();
+            return view('auth.list', ['users' => $users]);
+        }
+
+        return redirect("login")->withSuccess('You are not allowed to access');
+    }
     /**
      * Registration page
      */
