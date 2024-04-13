@@ -9,7 +9,7 @@
                 <h1>Màn hình đăng nhập</h1>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{-- --}}">
+                <form method="POST" action="{{ route('user.authUser') }}">
                     <div class="input">
                         @csrf
                         <div class="email-login">
