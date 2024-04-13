@@ -14,14 +14,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($users as $user)
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th>{{ $user->id }}</th>
+                                <th>{{ $user->name }}</th>
+                                <th>{{ $user->email }}</th>
                                 <th>
-                                    <a href="#">View</a> |
-                                    <a href="#">Edit</a> |
-                                    <a href="#">Delist</a>
+                                    <a href="{{-- route('user.readUser', ['id' => $user->id]) --}}">View</a> |
+                                    <a href="{{-- route('user.updateUser', ['id' => $user->id]) --}}">Edit</a> |
+                                    <a href="{{ route('user.deleteUser', ['id' => $user->id]) }}">Delete</a>
                                 </th>
                             </tr>
                         @endforeach
