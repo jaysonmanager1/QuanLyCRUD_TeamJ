@@ -68,6 +68,7 @@ class CrudUserController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'mssv' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ]);
@@ -75,6 +76,7 @@ class CrudUserController extends Controller
         $data = $request->all();
         $check = User::create([
             'name' => $data['name'],
+            'mssv' => $data['mssv'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
@@ -99,6 +101,7 @@ class CrudUserController extends Controller
         // Kiem tra du lieu
         $request->validate([
             'name' => 'required',
+            'mssv' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
@@ -109,6 +112,7 @@ class CrudUserController extends Controller
 
         // sau do toi tien hanh lay may cai moi cua anh de toi ... ->
         $user->name = $request->get('name');
+        $user->mssv = $request->get('mssv');
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
         // ... save no lai
