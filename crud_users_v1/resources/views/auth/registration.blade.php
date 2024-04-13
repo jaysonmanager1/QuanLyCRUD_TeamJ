@@ -13,6 +13,10 @@
                         <input type="text" id="name" name="name" required autofocus>
                     </div>
                     <div>
+                        <label class="lb-input" for="mssv">mssv</label>
+                        <input type="text" id="mssv" name="mssv" required autofocus>
+                    </div>
+                    <div>
                         <label class="lb-input" for="email">Email</label>
                         <input type="text" id="email_address" name="email" required autofocus>
                     </div>
