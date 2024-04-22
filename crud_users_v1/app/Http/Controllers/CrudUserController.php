@@ -8,6 +8,7 @@ use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+
 class CrudUserController extends Controller
 {
     /*
@@ -70,18 +71,34 @@ class CrudUserController extends Controller
             'name' => 'required',
             'mssv' => 'required',
             'email' => 'required|email|unique:users',
+            'photo' => 'required',
             'password' => 'required|min:6',
         ]);
 
         $data = $request->all();
+
+        // Xử lý lưu ảnh vào thư mục imgs
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = uniqid() . '.' . $image->extension(); // Sử dụng uniqid() để tạo tên tệp duy nhất
+            $image->storeAs('imgs', $imageName, 'public'); // Lưu tệp vào thư mục imgs với tên duy nhất
+            $data['photo'] = $imageName; // Lưu tên tệp vào cơ sở dữ liệu
+        }
+
+
         $check = User::create([
             'name' => $data['name'],
             'mssv' => $data['mssv'],
             'email' => $data['email'],
+            'photo' => $data['photo'],
             'password' => Hash::make($data['password'])
         ]);
 
-        return redirect("login")->withSuccess('You have signed-in');
+        if ($check) {
+            return redirect("registration")->with('Success', 'Đăng ký thành công');
+        } else {
+            return back()->withInput()->withErrors(['error' => 'Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại.']);
+        }
     }
 
     /** Update user detail */
@@ -98,36 +115,59 @@ class CrudUserController extends Controller
 
     public function postUpdateUser(Request $request)
     {
-        // Kiem tra du lieu
+        // Kiểm tra dữ liệu
         $request->validate([
             'name' => 'required',
             'mssv' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-        // lay id tu co so du lieu
+
+        // Lấy id từ request
         $user_id = $request->get('id');
-        // a` anh oi toi tim thay thang id cua anh roi
+
+        // Tìm kiếm người dùng trong cơ sở dữ liệu
         $user = User::find($user_id);
 
-        // sau do toi tien hanh lay may cai moi cua anh de toi ... ->
+        // Kiểm tra xem người dùng có tồn tại không
+        if (!$user) {
+            return redirect("list")->withError('User not found');
+        }
+
+        // Xử lý cập nhật ảnh vào thư mục imgs
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = uniqid() . '.' . $image->extension(); // Sử dụng uniqid() để tạo tên tệp duy nhất
+            $image->storeAs('imgs', $imageName, 'public'); // Lưu tệp vào thư mục imgs với tên duy nhất
+            $oldImage = $user->photo; // Lấy tên tệp ảnh cũ từ cơ sở dữ liệu
+            $user->photo = $imageName; // Lưu tên tệp mới vào cơ sở dữ liệu
+            // Xóa ảnh cũ sau khi đã cập nhật ảnh mới
+            if ($oldImage) {
+                Storage::disk('public')->delete('/storage/imgs/' . $oldImage);
+            }
+        }
+
+        // Cập nhật thông tin người dùng
         $user->name = $request->get('name');
         $user->mssv = $request->get('mssv');
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
-        // ... save no lai
+
+        // Lưu thông tin người dùng đã cập nhật
         $user->save();
-        // roi toi tra no ve trang list
+
+        // Chuyển hướng về trang danh sách người dùng và hiển thị thông báo thành công
         return redirect("list")->withSuccess('User details have been updated');
     }
-     /** View user detail */
-     public function readUser(Request $request)
-     {
-         $user_id = $request->get('id');
-         $user = User::find($user_id);
- 
-         return view('auth.read', ['user' => $user]);
-     }
+
+    /** View user detail */
+    public function readUser(Request $request)
+    {
+        $user_id = $request->get('id');
+        $user = User::find($user_id);
+
+        return view('auth.read', ['user' => $user]);
+    }
     // Signout
     public function signOut()
     {
