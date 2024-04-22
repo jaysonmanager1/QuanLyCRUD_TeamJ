@@ -1,5 +1,6 @@
 @extends('dashboard')
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 @section('content_update')
     <main class="update-form">
         <div class="container">
@@ -8,11 +9,10 @@
                     <div class="card">
                         <h3 class="card-header text-center">Update User</h3>
                         <div class="card-body">
-                            <form action="{{ route('user.postUpdateUser') }}" method="POST">
+                            <form action="{{ route('user.postUpdateUser') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
-                                    <input value="{{ $user->id }}" type="text" placeholder="ID" id="id"
-                                        class="form-control" name="id" required autofocus>
+                                    <input value="{{ $user->id }}" type="text" placeholder="ID" id="id">
                                 </div>
                                 <div class="form-group mb-3">
                                     <input value="{{ $user->name }}" type="text" placeholder="Name" id="name"
@@ -31,9 +31,14 @@
                                 <div class="form-group mb-3">
                                     <input type="password" placeholder="Password" id="password" class="form-control"
                                         name="password" required>
-                                    @if ($errors->has('password'))
-                                        <span class="text-danger">{{ $errors->first('password') }}</span>
-                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
+                                    <p>Ảnh cũ</p>
+                                    <img src="{{ asset('/storage/imgs/' . $user->photo) }}" alt="Ảnh cũ" width="50"
+                                        height="50">
+                                    <br>
+                                    <label for="photo" class="mt-3">Chọn ảnh mới</label>
+                                    <input type="file" id="photo" class="form-control" name="photo" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="checkbox">

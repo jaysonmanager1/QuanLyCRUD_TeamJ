@@ -13,6 +13,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
                             <th>ID</th>
                             <th>Name</th>
                             <th>MSSV</th>
+                            <th>IMG</th>
                             <th>Email</th>
                         </tr>
                     </thead>
@@ -21,6 +22,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
                             <td>{{$user->id}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->mssv}}</td>
+                            <td><img src="{{ asset('storage/imgs/' . $user->photo) }}" alt="..." width="50" height="50"></td>
                             <td>{{$user->email}}</td>
                         </tr>
                     </tbody>

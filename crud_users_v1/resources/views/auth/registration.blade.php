@@ -1,12 +1,15 @@
 @extends('dashboard')
-
+<link rel="stylesheet" href="{{ asset('/front-end/register-style.css') }}">
+<script src="{{ asset('/js-front/script.js') }}"></script>
 @section('content')
-    <link rel="stylesheet" href="{{ asset('/front-end/register-style.css') }}">
+    <div class="notifi-success" style="display: none">
+        {{ session('Success') }}
+    </div>
     <section>
         <div class="card-login">
             <div class="card-body">
                 <h1>Màn hình đăng ký</h1>
-                <form action="{{ route('user.postUser') }}" method="POST" class="regis-form">
+                <form action="{{ route('user.postUser') }}" method="POST" class="regis-form" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label class="lb-input" for="name">Name</label>
@@ -25,6 +28,10 @@
                         <input type="password" id="password" name="password" required>
                     </div>
                     <div>
+                        <label class="lb-input" for="photo">Photo</label>
+                        <input type="file" name="photo" id="photo" required>
+                    </div>
+                    <div>
                         <div class="checkbox">
                             <input type="checkbox" name="remember"><span>Nhớ tôi</span>
                         </div>
@@ -36,4 +43,10 @@
             </div>
         </div>
     </section>
+    <script>
+        const notifiSuccess = document.querySelector('.notifi-success');
+        if (notifiSuccess) {
+            alert(notifiSuccess.textContent);
+        }
+    </script>
 @endsection

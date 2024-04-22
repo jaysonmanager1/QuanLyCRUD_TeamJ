@@ -2,7 +2,6 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('/front-end/login-style.css') }}">
-
     <section class="login-form">
         <div class="card-login">
             <div class="card-title">

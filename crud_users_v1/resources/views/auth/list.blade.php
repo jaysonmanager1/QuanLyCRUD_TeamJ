@@ -1,17 +1,18 @@
+<title>List</title>
 @extends('dashboard')
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <main class="login-form">
         <div class="container">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center border">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
                             <th>MSSV</th>
+                            <th>IMG</th>
                             <th>Email</th>
                             <th>Action</th>
                         </tr>
@@ -22,6 +23,9 @@
                                 <th>{{ $user->id }}</th>
                                 <th>{{ $user->name }}</th>
                                 <th>{{ $user->mssv }}</th>
+                                <th>
+                                    <img src="{{ asset('storage/imgs/' . $user->photo) }}" alt="Avatar" width="50px" height="50px">
+                                </th>
                                 <th>{{ $user->email }}</th>
                                 <th>
                                     <a href="{{ route('user.readUser', ['id' => $user->id]) }}">View</a> |
