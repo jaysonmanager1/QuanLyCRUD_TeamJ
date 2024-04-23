@@ -5,7 +5,7 @@
     <div class="notifi-success" style="display: none">
         {{ session('Success') }}
     </div>
-    <section>
+    <section class="register">
         <div class="card-login">
             <div class="card-body">
                 <h1>Màn hình đăng ký</h1>

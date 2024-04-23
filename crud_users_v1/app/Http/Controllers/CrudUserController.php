@@ -76,12 +76,13 @@ class CrudUserController extends Controller
         ]);
 
         $data = $request->all();
+        // var_dump($data);die();
 
         // Xử lý lưu ảnh vào thư mục imgs
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
             $imageName = uniqid() . '.' . $image->extension(); // Sử dụng uniqid() để tạo tên tệp duy nhất
-            $image->storeAs('imgs', $imageName, 'public'); // Lưu tệp vào thư mục imgs với tên duy nhất
+            $image->storeAs('imgs/', $imageName, 'public'); // Lưu tệp vào thư mục imgs với tên duy nhất
             $data['photo'] = $imageName; // Lưu tên tệp vào cơ sở dữ liệu
         }
 
@@ -115,43 +116,42 @@ class CrudUserController extends Controller
 
     public function postUpdateUser(Request $request)
     {
-        // Kiểm tra dữ liệu
+        // Lấy dữ liệu từ request
+        $input = $request->all();
+
+        // Validate dữ liệu
         $request->validate([
             'name' => 'required',
-            'mssv' => 'required',
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required|min:6',
+            'mssv' => 'required',
+            'photo' => 'image', // Kiểm tra file ảnh (nếu có)
         ]);
 
-        // Lấy id từ request
-        $user_id = $request->get('id');
-
-        // Tìm kiếm người dùng trong cơ sở dữ liệu
-        $user = User::find($user_id);
-
-        // Kiểm tra xem người dùng có tồn tại không
-        if (!$user) {
-            return redirect("list")->withError('User not found');
-        }
-
-        // Xử lý cập nhật ảnh vào thư mục imgs
-        if ($request->hasFile('photo')) {
-            $image = $request->file('photo');
-            $imageName = uniqid() . '.' . $image->extension(); // Sử dụng uniqid() để tạo tên tệp duy nhất
-            $image->storeAs('imgs', $imageName, 'public'); // Lưu tệp vào thư mục imgs với tên duy nhất
-            $oldImage = $user->photo; // Lấy tên tệp ảnh cũ từ cơ sở dữ liệu
-            $user->photo = $imageName; // Lưu tên tệp mới vào cơ sở dữ liệu
-            // Xóa ảnh cũ sau khi đã cập nhật ảnh mới
-            if ($oldImage) {
-                Storage::disk('public')->delete('/storage/imgs/' . $oldImage);
-            }
-        }
+        // Tìm người dùng trong cơ sở dữ liệu
+        $user = User::find($input['id']);
 
         // Cập nhật thông tin người dùng
-        $user->name = $request->get('name');
-        $user->mssv = $request->get('mssv');
-        $user->email = $request->get('email');
-        $user->password = Hash::make($request->get('password'));
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->photo = $input['photo'];
+        $user->password = Hash::make($input['password']);
+
+        // Nếu có file ảnh mới được chọn
+        if ($request->hasFile('photo')) {
+            // Lưu file ảnh mới vào thư mục lưu trữ
+            $photo = $request->file('photo');
+            $filename = time() . '_' . $photo->getClientOriginalName();
+            $photo->storeAs('imgs/', $filename, 'public');
+
+            // // Xóa ảnh cũ (nếu có)
+            // if ($user->photo) {
+            //     storage::delete('imgs/' . $user->photo, 'public');
+            // }
+
+            // Cập nhật tên file ảnh mới vào thông tin người dùng
+            $user->photo = $filename;
+        }
 
         // Lưu thông tin người dùng đã cập nhật
         $user->save();
@@ -159,6 +159,8 @@ class CrudUserController extends Controller
         // Chuyển hướng về trang danh sách người dùng và hiển thị thông báo thành công
         return redirect("list")->withSuccess('User details have been updated');
     }
+
+
 
     /** View user detail */
     public function readUser(Request $request)

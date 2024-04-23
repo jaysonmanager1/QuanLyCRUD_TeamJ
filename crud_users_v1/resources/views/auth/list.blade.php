@@ -5,8 +5,8 @@
 @section('content')
     <main class="login-form">
         <div class="container">
-            <div class="row justify-content-center border">
-                <table class="table">
+            <div class="row justify-content-center">
+                <table class="table border">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -24,7 +24,7 @@
                                 <th>{{ $user->name }}</th>
                                 <th>{{ $user->mssv }}</th>
                                 <th>
-                                    <img src="{{ asset('storage/imgs/' . $user->photo) }}" alt="Avatar" width="50px" height="50px">
+                                    <img class="border border-primary" src="{{ asset('storage/imgs/' . $user->photo) }}" alt="Avatar" width="50px" height="50px">
                                 </th>
                                 <th>{{ $user->email }}</th>
                                 <th>
