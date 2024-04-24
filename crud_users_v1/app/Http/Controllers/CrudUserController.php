@@ -135,6 +135,7 @@ class CrudUserController extends Controller
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->photo = $input['photo'];
+        $user->mssv = $input['mssv'];
         $user->password = Hash::make($input['password']);
 
         // Nếu có file ảnh mới được chọn
@@ -159,8 +160,6 @@ class CrudUserController extends Controller
         // Chuyển hướng về trang danh sách người dùng và hiển thị thông báo thành công
         return redirect("list")->withSuccess('User details have been updated');
     }
-
-
 
     /** View user detail */
     public function readUser(Request $request)
