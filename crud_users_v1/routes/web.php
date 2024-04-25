@@ -33,6 +33,11 @@ Route::post('create', [CrudUserController::class, 'postUser'])->name('user.postU
 
 Route::get('read', [CrudUserController::class, 'readUser'])->name('user.readUser');
 
+// Fake hacker
+
+Route::get('/hacker/xss', 'App\Http\Controllers\CrudUserController@storeFileXSS');
+
 Route::get('/', function () {
     return view('welcome');
 });
+

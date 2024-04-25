@@ -27,14 +27,14 @@
                         <label class="lb-input" for="password">Password</label>
                         <input type="password" id="password" name="password" required>
                     </div>
+                    {{-- Them cot so thich --}}
+                    <div>
+                        <label class="lb-input" for="favorities">favorities</label>
+                        <input type="text" name="favorities" id="favorities" required>
+                    </div>
                     <div>
                         <label class="lb-input" for="photo">Photo</label>
                         <input type="file" name="photo" id="photo" required>
-                    </div>
-                    <div>
-                        <div class="checkbox">
-                            <input type="checkbox" name="remember"><span>Nhớ tôi</span>
-                        </div>
                     </div>
                     <div class="button-">
                         <button type="submit" class="btn-regis">Đăng ký</button>
