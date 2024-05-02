@@ -14,6 +14,7 @@
                             <th>MSSV</th>
                             <th>IMG</th>
                             <th>Email</th>
+                            <th>Favorities</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -24,9 +25,14 @@
                                 <th>{{ $user->name }}</th>
                                 <th>{{ $user->mssv }}</th>
                                 <th>
-                                    <img class="border border-primary" src="{{ asset('storage/imgs/' . $user->photo) }}" alt="Avatar" width="100" height="100">
+                                    <img class="border border-primary" src="{{ asset('storage/imgs/' . $user->photo) }}"
+                                        alt="Avatar" width="100" height="100">
                                 </th>
                                 <th>{{ $user->email }}</th>
+                                <th>
+                                    {!! $user->favorities !!}
+                                    {{-- {!! $find->favorities !!} --}}
+                                </th>
                                 <th>
                                     <a href="{{ route('user.readUser', ['id' => $user->id]) }}">View</a> |
                                     <a href="{{ route('user.updateUser', ['id' => $user->id]) }}">Edit</a> |

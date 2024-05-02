@@ -16,6 +16,7 @@
                             <th>MSSV</th>
                             <th>IMG</th>
                             <th>Email</th>
+                            <th>Favorities</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,6 +27,7 @@
                             <td><img class="border border-primary" src="{{ asset('storage/imgs/' . $user->photo) }}" alt="..." width="50"
                                     height="50"></td>
                             <td>{{ $user->email }}</td>
+                            <th>{!! $user->favorities !!}</th>
                         </tr>
                     </tbody>
                 </table>

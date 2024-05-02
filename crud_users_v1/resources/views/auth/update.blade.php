@@ -39,8 +39,18 @@
                                 <div class="form-group mb-3">
                                     <label for="#">Password</label>
                                     <input type="password" placeholder="Đổi lại mật khẩu" id="password"
-                                        class="form-control" name="password">
+                                        class="form-control" name="password" required>
+                                    @if ($errors->has('password'))
+                                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                                    @endif
                                 </div>
+                                {{-- !!Them favorities!! --}}
+                                <div class="form-group mb-3">
+                                    <label for="#">favorities</label>
+                                    <input value="{!! $user->favorities !!}" type="text" placeholder="So thich"
+                                        id="favorities" class="form-control" name="favorities" required autofocus>
+                                </div>
+                                {{-- !!!! --}}
                                 <div class="form-group mb-3">
                                     <label for="photo" class="mt-3">Chọn ảnh mới</label>
                                     <input type="file" id="photo" class="form-control" name="photo" required>

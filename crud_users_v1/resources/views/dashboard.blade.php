@@ -34,11 +34,11 @@
         @yield('content')
         @yield('content_update')
     </div>
-    
+
     <footer>
         <h5 class="text">Lập trình web be2 by team J</h5>
     </footer>
-    
+
 </body>
 
 </html>
