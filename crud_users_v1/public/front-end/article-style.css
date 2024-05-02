@@ -1,0 +1,12 @@
+.box-favorite {
+    border: 1px solid #000;
+    width: 100%;
+    height: auto;
+}
+
+.chua-danh-sach {
+    border: 1px solid #000;
+    width: fit-content;
+    padding: 15px;
+    margin: 15px;
+}

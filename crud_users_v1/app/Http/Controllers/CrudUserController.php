@@ -205,21 +205,4 @@ class CrudUserController extends Controller
         var_dump($cookieValue);
     }
 
-    public function search(Request $request) {
-        $listOfDepartment = Department::select('*');
-
-    if(isset($request->q) && !empty($request->q))
-    {
-        $q = $request->q;
-        $listOfDepartment = $listOfDepartment->where('nameOfDepartment', 'like', '%' . $q . '%');
-        $listOfDepartment = $listOfDepartment->orWhere('createdBy', 'like', '%' . $q . '%');
-    }
-
-    $listOfDepartment = $listOfDepartment->paginate(2);
-
-    if (count($listOfDepartment) > 0) {
-        return view('auth.department')->withData($listOfDepartment);
-    }
-    // return view('pages.department')->withMessage("No Data Found");
-    }
 }
